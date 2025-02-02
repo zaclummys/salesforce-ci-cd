@@ -32,4 +32,3 @@ jobs:
 
     - name: Deploy to Production
       run: sf project deploy start --source-dir force-app
-      # Add manual approval step here for production deployments
