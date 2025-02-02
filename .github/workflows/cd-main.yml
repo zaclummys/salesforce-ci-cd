@@ -28,8 +28,8 @@ jobs:
           --set-default
 
     - name: Validate Deployment
-      run: sf project deploy validate
+      run: sf project deploy validate --source-dir force-app
 
     - name: Deploy to Production
-      run: sf project deploy start
+      run: sf project deploy start --source-dir force-app
       # Add manual approval step here for production deployments
