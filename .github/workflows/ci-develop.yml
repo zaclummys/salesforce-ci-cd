@@ -50,3 +50,6 @@ jobs:
         
     - name: Delete Scratch Org
       run: sf org delete scratch --target-org ci-scratch --no-prompt
+
+    - name: Show Dev Hub Limits
+      run: sf limits api display --target-org "Dev Hub"
