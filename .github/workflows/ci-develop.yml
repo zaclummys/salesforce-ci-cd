@@ -18,8 +18,10 @@ jobs:
         sf --version
 
     - name: Auth Dev Hub
+      env:
+        DEV_HUB_JWT_KEY: ${{ secrets.DEV_HUB_JWT_KEY }}
       run: |
-        echo "${{ secrets.DEV_HUB_JWT_KEY }}" > server.key
+        echo "$DEV_HUB_JWT_KEY" > server.key
         sf org login jwt \
           --client-id ${{ vars.DEV_HUB_CLIENT_ID }} \
           --jwt-key-file server.key \
