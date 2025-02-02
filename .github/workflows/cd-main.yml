@@ -25,10 +25,11 @@ jobs:
           --jwt-key-file server.key \
           --username ${{ vars.PROD_USERNAME }} \
           --alias ProdOrg
+          --set-default
 
     - name: Validate Deployment
-      run: sf project deploy validate --target-org ProdOrg
+      run: sf project deploy validate
 
     - name: Deploy to Production
-      run: sf project deploy start --target-org ProdOrg
+      run: sf project deploy start
       # Add manual approval step here for production deployments

@@ -27,6 +27,7 @@ jobs:
           --jwt-key-file server.key \
           --username ${{ vars.DEV_HUB_USERNAME }} \
           --alias "Dev Hub"
+          --set-default
           --set-default-dev-hub
 
     - name: Create Scratch Org
