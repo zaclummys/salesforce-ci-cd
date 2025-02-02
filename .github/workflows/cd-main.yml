@@ -16,8 +16,10 @@ jobs:
         sf --version
 
     - name: Auth Production Org
+      env:
+        PROD_JWT_KEY: ${{ secrets.PROD_JWT_KEY }}
       run: |
-        echo "${{ secrets.DEV_HUB_JWT_KEY }}" > server.key
+        echo "$PROD_JWT_KEY" > server.key
         sf org login jwt \
           --client-id ${{ vars.PROD_CLIENT_ID }} \
           --jwt-key-file server.key \
