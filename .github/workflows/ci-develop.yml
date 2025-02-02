@@ -45,8 +45,8 @@ jobs:
         sf apex run test \
           --test-level RunLocalTests \
           --code-coverage \
-          --result-format human \
-          --target-org ci-scratch
+          --target-org ci-scratch \
+          -- synchronous
         
     - name: Delete Scratch Org
       run: sf org delete scratch --target-org ci-scratch --no-prompt
