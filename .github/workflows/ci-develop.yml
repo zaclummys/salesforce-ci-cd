@@ -46,7 +46,7 @@ jobs:
           --test-level RunLocalTests \
           --code-coverage \
           --target-org ci-scratch \
-          -- synchronous
+          --synchronous
         
     - name: Delete Scratch Org
       run: sf org delete scratch --target-org ci-scratch --no-prompt
