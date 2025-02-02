@@ -49,4 +49,5 @@ jobs:
           --target-org ci-scratch
         
     - name: Delete Scratch Org
+      continue-on-error: true
       run: sf org delete scratch --target-org ci-scratch --no-prompt
