@@ -33,7 +33,7 @@ jobs:
     - name: Create Scratch Org
       run: |
         sf org create scratch \
-          --definition-file config/scratch-org-config.json \
+          --definition-file config/project-scratch-def.json \
           --alias ci-scratch \
           --duration-days 7
 
