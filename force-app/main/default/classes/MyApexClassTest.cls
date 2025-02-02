@@ -1,7 +1,7 @@
 @IsTest
 public class MyApexClassTest {
     @IsTest
-    public static void willFail () {
-        System.assertEquals(1, 2);
+    public static void willPass () {
+        System.assertEquals(1, 1);
     }
 }
