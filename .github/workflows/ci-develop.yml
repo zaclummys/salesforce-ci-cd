@@ -53,4 +53,5 @@ jobs:
       run: sf org delete scratch --target-org ci-scratch --no-prompt
 
     - name: Show Dev Hub Limits
+      if: always()
       run: sf limits api display --target-org "Dev Hub"
