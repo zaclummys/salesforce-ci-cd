@@ -17,11 +17,11 @@ jobs:
 
     - name: Auth Production Org
       run: |
-        echo "${{ secrets.SFDX_JWT_KEY }}" | base64 -d > server.key
+        echo "${{ secrets.DEV_HUB_JWT_KEY }}" > server.key
         sf org login jwt \
-          --client-id ${{ secrets.SFDX_CLIENT_ID }} \
+          --client-id ${{ vars.PROD_CLIENT_ID }} \
           --jwt-key-file server.key \
-          --username ${{ secrets.PROD_ORG_USERNAME }} \
+          --username ${{ vars.PROD_USERNAME }} \
           --alias ProdOrg
 
     - name: Validate Deployment
