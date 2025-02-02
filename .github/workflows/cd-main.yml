@@ -24,7 +24,7 @@ jobs:
           --client-id ${{ vars.PROD_CLIENT_ID }} \
           --jwt-key-file server.key \
           --username ${{ vars.PROD_USERNAME }} \
-          --alias ProdOrg
+          --alias ProdOrg \
           --set-default
 
     - name: Validate Deployment
