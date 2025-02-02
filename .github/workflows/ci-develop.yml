@@ -35,7 +35,7 @@ jobs:
         sf org create scratch \
           --definition-file config/project-scratch-def.json \
           --alias ci-scratch \
-          --duration-days 7
+          --duration-days 1
 
     - name: Push Source
       run: sf project deploy start --target-org ci-scratch
@@ -49,6 +49,7 @@ jobs:
           --synchronous
         
     - name: Delete Scratch Org
+      if: always()
       run: sf org delete scratch --target-org ci-scratch --no-prompt
 
     - name: Show Dev Hub Limits
