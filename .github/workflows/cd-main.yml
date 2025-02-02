@@ -1,0 +1,32 @@
+name: CD - Main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Salesforce CLI
+      run: |
+        npm install -g @salesforce/cli
+        sf --version
+
+    - name: Auth Production Org
+      run: |
+        echo "${{ secrets.SFDX_JWT_KEY }}" | base64 -d > server.key
+        sf org login jwt \
+          --client-id ${{ secrets.SFDX_CLIENT_ID }} \
+          --jwt-key-file server.key \
+          --username ${{ secrets.PROD_ORG_USERNAME }} \
+          --alias ProdOrg
+
+    - name: Validate Deployment
+      run: sf project deploy validate --target-org ProdOrg
+
+    - name: Deploy to Production
+      run: sf project deploy start --target-org ProdOrg
+      # Add manual approval step here for production deployments

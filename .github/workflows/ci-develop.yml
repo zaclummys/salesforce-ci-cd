@@ -1,0 +1,49 @@
+name: CI - Develop
+
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop]
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Salesforce CLI
+      run: |
+        npm install -g @salesforce/cli
+        sf --version
+
+    - name: Auth Dev Hub
+      run: |
+        echo "${{ secrets.DEV_HUB_JWT_KEY }}" > server.key
+        sf org login jwt \
+          --client-id ${{ vars.DEV_HUB_CLIENT_ID }} \
+          --jwt-key-file server.key \
+          --username ${{ vars.DEV_HUB_USERNAME }} \
+          --alias "Dev Hub"
+          --set-default-dev-hub
+
+    - name: Create Scratch Org
+      run: |
+        sf org create scratch \
+          --definition-file config/scratch-org-config.json \
+          --alias ci-scratch \
+          --duration-days 7
+
+    - name: Push Source
+      run: sf project deploy start --target-org ci-scratch
+
+    - name: Run Tests
+      run: |
+        sf apex run test \
+          --test-level RunLocalTests \
+          --code-coverage \
+          --result-format human \
+          --target-org ci-scratch
+        
+    - name: Delete Scratch Org
+      run: sf org delete scratch --target-org ci-scratch --no-prompt
