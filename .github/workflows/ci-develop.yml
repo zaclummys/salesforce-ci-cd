@@ -38,11 +38,9 @@ jobs:
           --duration-days 1
 
     - name: Push Source
-      continue-on-error: true
       run: sf project deploy start --target-org ci-scratch
 
     - name: Run Tests
-      continue-on-error: true
       run: |
         sf apex run test \
           --test-level RunLocalTests \
@@ -51,4 +49,5 @@ jobs:
           --target-org ci-scratch
         
     - name: Delete Scratch Org
+      if: always()
       run: sf org delete scratch --target-org ci-scratch --no-prompt
