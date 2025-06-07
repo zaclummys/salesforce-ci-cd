@@ -116,5 +116,6 @@ jobs:
           path: test-results
 
       - name: Delete Scratch Org
+        if: always()
         run: |
           sf org delete scratch --target-org $SCRATCH_ORG_ALIAS --no-prompt
