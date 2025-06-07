@@ -94,7 +94,7 @@ jobs:
 
       - name: Authorize Dev Hub
         run: |
-          echo $SFDX_AUTH_URL | sf org login sfdx-url --sfdx-url-stdin --alias DevHub --set-default-dev-hub
+          echo $SFDX_AUTH_URL | sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin 
 
       - name: Create Scratch Org
         run: |
