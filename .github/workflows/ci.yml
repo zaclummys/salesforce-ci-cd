@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PMD_VERSION: 6.55.0
-
+      PMD_CACHE_DIR: $HOME/pmd-cache
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -28,9 +28,17 @@ jobs:
         run: |
           rm $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip
 
+      - name: Restore PMD cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.PMD_CACHE_DIR }}
+          key: pmd-cache-${{ hashFiles('**/*.cls', '**/*.trigger') }}
+          restore-keys: |
+            pmd-cache-
+
       - name: Run PMD
         run: |
-          $HOME/pmd-bin-${{ env.PMD_VERSION }}/bin/run.sh pmd -d force-app -R category/apex/design.xml -f text --cache .pmd-cache
+          $HOME/pmd-bin-${{ env.PMD_VERSION }}/bin/run.sh pmd -d force-app -R category/apex/design.xml -f text --cache ${{ env.PMD_CACHE_DIR }}
 
   lint-lwc:
     runs-on: ubuntu-latest
