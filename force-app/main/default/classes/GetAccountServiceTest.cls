@@ -8,7 +8,7 @@ public class GetAccountServiceTest {
 
         insert testAccount;
 
-        Account result = GetAccountService.getAccount(testAccount.Id);
+        Account result = GetAccountService.getAccount();
 
         System.assertNotEquals(null, result, 'The account should not be null');
         System.assertEquals(testAccount.Id, result.Id, 'The returned account ID should match the test account ID');
