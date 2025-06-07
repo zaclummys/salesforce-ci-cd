@@ -116,7 +116,7 @@ jobs:
             --code-coverage \
             --detailed-coverage \
             --result-format human \
-            --synchonous
+            --synchronous
 
       - name: Delete Scratch Org
         if: always()
