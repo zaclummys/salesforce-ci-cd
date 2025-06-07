@@ -10,10 +10,9 @@ jobs:
   pmd-apex:
     runs-on: ubuntu-latest
     env:
-      PMD_VERSION: 6.55.0
-      PMD_HOME: $HOME/pmd-bin-${{ env.PMD_VERSION }}
-      PMD_ZIP_HOME: $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip
-      PMD_DOWNLOAD_URL: https://github.com/pmd/pmd/releases/download/pmd_releases/${{ env.PMD_VERSION}}/pmd-bin-${{ env.PMD_VERSION }}.zip
+      PMD_HOME: $HOME/pmd-bin-6.55.0
+      PM_ZIP: $HOME/pmd-bin-6.55.0.zip
+      PMD_DOWNLOAD_URL: https://github.com/pmd/pmd/releases/download/pmd_releases/6.55.0/pmd-bin-6.55.0.zip
 
     steps:
       - name: Checkout repository
@@ -22,17 +21,17 @@ jobs:
       - name: Download PMD Zip
         run: |
           echo "PMD Download URL: $PMD_DOWNLOAD_URL"
-          curl -L -o $PMD_ZIP_HOME $PMD_DOWNLOAD_URL
+          curl -L -o $PM_ZIP $PMD_DOWNLOAD_URL
 
       - name: Unzip PMD Zip
         run: |
-          echo "Unzipping PMD: $PMD_ZIP_HOME"
-          unzip $PMD_ZIP_HOME -d $HOME
+          echo "Unzipping PMD: $PM_ZIP"
+          unzip $PM_ZIP -d $HOME
 
       - name: Delete PMD Zip
         run: |
-          echo "Deleting PMD Zip: $PMD_ZIP_HOME"
-          rm $PMD_ZIP_HOME
+          echo "Deleting PMD Zip: $PM_ZIP"
+          rm $PM_ZIP
 
       - name: Run PMD
         run: |
