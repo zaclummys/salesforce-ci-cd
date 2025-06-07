@@ -76,6 +76,9 @@ jobs:
 
   salesforce-ci:
     runs-on: ubuntu-latest
+    env:
+      SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+      SCRATCH_ORG_ALIAS: ci-scratch-org
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -91,22 +94,19 @@ jobs:
 
       - name: Authorize Dev Hub
         run: |
-          echo "${{ secrets.SFDX_AUTH_URL }}" > auth_url.txt
-          sf org login sfdx-url --sfdx-url-file auth_url.txt --alias DevHub --set-default-dev-hub
-        env:
-          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+          echo $SFDX_AUTH_URL | sf org login sfdx-url --sfdx-url-stdin --alias DevHub --set-default-dev-hub
 
       - name: Create Scratch Org
         run: |
-          sf org create scratch --definition-file config/project-scratch-def.json --alias ci-scratch-org --set-default --duration-days 1
+          sf org create scratch --definition-file config/project-scratch-def.json --alias $SCRATCH_ORG_ALIAS --set-default --duration-days 1
 
       - name: Push Source to Scratch Org
         run: |
-          sf project deploy start --target-org ci-scratch-org
+          sf project deploy start --target-org $SCRATCH_ORG_ALIAS
 
       - name: Run Apex tests on Scratch Org
         run: |
-          sf apex test run --target-org ci-scratch-org --code-coverage --result-format tap --output-dir test-results --wait 10
+          sf apex test run --target-org $SCRATCH_ORG_ALIAS --code-coverage --result-format tap --output-dir test-results --wait 10
 
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
@@ -115,6 +115,5 @@ jobs:
           path: test-results
 
       - name: Delete Scratch Org
-        if: always()
         run: |
-          sf org delete scratch --target-org ci-scratch-org --no-prompt
+          sf org delete scratch --target-org $SCRATCH_ORG_ALIAS --no-prompt
