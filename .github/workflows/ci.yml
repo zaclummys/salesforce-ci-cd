@@ -10,9 +10,7 @@ jobs:
   pmd-apex:
     runs-on: ubuntu-latest
     env:
-      PMD_HOME: $HOME/pmd-bin-6.55.0
-      PM_ZIP: $HOME/pmd-bin-6.55.0.zip
-      PMD_DOWNLOAD_URL: https://github.com/pmd/pmd/releases/download/pmd_releases/6.55.0/pmd-bin-6.55.0.zip
+      PMD_VERSION: 6.55.0
 
     steps:
       - name: Checkout repository
@@ -20,22 +18,19 @@ jobs:
 
       - name: Download PMD Zip
         run: |
-          echo "PMD Download URL: $PMD_DOWNLOAD_URL"
-          curl -L -o $PM_ZIP $PMD_DOWNLOAD_URL
+          curl -L -o $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip https://github.com/pmd/pmd/releases/download/pmd_releases/${{ env.PMD_VERSION }}/pmd-bin-${{ env.PMD_VERSION }}.zip
 
       - name: Unzip PMD Zip
         run: |
-          echo "Unzipping PMD: $PM_ZIP"
-          unzip $PM_ZIP -d $HOME
+          unzip $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip -d $HOME
 
       - name: Delete PMD Zip
         run: |
-          echo "Deleting PMD Zip: $PM_ZIP"
-          rm $PM_ZIP
+          rm $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip
 
       - name: Run PMD
         run: |
-          $PMD_HOME/bin/run.sh pmd -d force-app -R category/apex/design.xml -f text --cache .pmd-cache
+          $HOME/pmd-bin-${{ env.PMD_VERSION }}/bin/run.sh pmd -d force-app -R category/apex/design.xml -f text --cache .pmd-cache
 
   lint-lwc:
     runs-on: ubuntu-latest
