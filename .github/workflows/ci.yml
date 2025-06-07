@@ -109,7 +109,7 @@ jobs:
           sf apex test run --target-org ci-scratch-org --code-coverage --result-format tap --output-dir test-results --wait 10
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: apex-test-results
           path: test-results
