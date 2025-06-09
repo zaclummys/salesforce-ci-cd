@@ -62,6 +62,7 @@ jobs:
         run: npm run test
 
   deploy-to-scratch-org:
+    if: never()
     runs-on: ubuntu-latest
     env:
       SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
