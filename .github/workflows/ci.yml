@@ -77,7 +77,7 @@ jobs:
 
       - name: Authorize Dev Hub
         run: |
-          echo $SFDX_AUTH_URL | sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin 
+          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin 
 
       - name: Validate
         run: sf project deploy validate --target-org DevHub --source-dir force-app --test-level RunLocalTests
