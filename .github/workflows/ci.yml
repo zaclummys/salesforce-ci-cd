@@ -59,8 +59,30 @@ jobs:
 
       - name: Test Lightning Web Components
         run: npm run test
+
+  validate-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install --global @salesforce/cli
+
+      - name: Authorize Staging Org
+        run: |
+          echo ${{ secrets.STAGING_SFDX_AUTH_URL }} | sf org login sfdx-url --alias Staging --sfdx-url-stdin 
+
+      - name: Validate Against Staging Org
+        run: sf project deploy validate --target-org Staging --source-dir force-app
   
-  validate:
+  validate-production:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
