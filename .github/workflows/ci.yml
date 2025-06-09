@@ -14,36 +14,18 @@ on:
 jobs:
   pmd-apex:
     runs-on: ubuntu-latest
-    env:
-      PMD_VERSION: 6.55.0
-      PMD_CACHE_DIR: $HOME/pmd-cache
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Download PMD Zip
-        run: |
-          curl -L -o $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip https://github.com/pmd/pmd/releases/download/pmd_releases/${{ env.PMD_VERSION }}/pmd-bin-${{ env.PMD_VERSION }}.zip
-
-      - name: Unzip PMD Zip
-        run: |
-          unzip $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip -d $HOME
-
-      - name: Delete PMD Zip
-        run: |
-          rm $HOME/pmd-bin-${{ env.PMD_VERSION }}.zip
-
-      - name: Restore PMD cache
-        uses: actions/cache@v3
+      - uses: actions/setup-java@v4
         with:
-          path: ${{ env.PMD_CACHE_DIR }}
-          key: pmd-cache-${{ hashFiles('**/*.cls', '**/*.trigger') }}
-          restore-keys: |
-            pmd-cache-
+          distribution: "temurin"
+          java-version: "11"
 
-      - name: Run PMD
-        run: |
-          $HOME/pmd-bin-${{ env.PMD_VERSION }}/bin/run.sh pmd -d force-app -R category/apex/design.xml -f text --cache ${{ env.PMD_CACHE_DIR }}
+      - uses: pmd/pmd-github-action@v2
+        with:
+          rulesets: "ruleset.xml"
 
   lint-lwc:
     runs-on: ubuntu-latest
