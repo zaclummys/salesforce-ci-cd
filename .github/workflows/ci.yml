@@ -59,3 +59,21 @@ jobs:
 
       - name: Test Lightning Web Components
         run: npm run test
+  
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Authorize Dev Hub
+        run: |
+          echo $SFDX_AUTH_URL | sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin 
+
+      - name: Validate
+        run: sf project deploy validate --target-org DevHub --source-dir force-app --test-level RunLocalTests
