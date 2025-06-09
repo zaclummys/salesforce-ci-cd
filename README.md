@@ -1,18 +1,68 @@
-# Salesforce DX Project: Next Steps
+# Salesforce CI/CD
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+This repository contains a sample Salesforce CI/CD pipeline using GitHub Actions and Salesforce CLI. It demonstrates how to set up a Scratch Org, deploy source code, retrieve source code, and manage predefined data and metadata.
 
-## How Do You Plan to Deploy Your Changes?
+## Scratch Org
+You can create a new Scratch Org by running the following command:
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+```bash
+sf org create scratch --target-dev-hub DevHub
+```
 
-## Configure Your Salesforce DX Project
+You can define a duration for the Scratch Org by using the `--duration-days` option, for example:
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+```bash
+sf org create scratch --target-dev-hub DevHub --duration-days 30
+```
 
-## Read All About It
+The duration can be set to a maximum of 30 days. If you do not specify a duration, the default is 7 days.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+### Deploy Source Code
+To deploy the source code to the Scratch Org, use:
+
+```bash
+sf project deploy start --target-org {{ScratchOrg}}
+```
+
+If you have Source Tracking enabled, you can preview the changes that will be deployed by running:
+
+```bash
+sf project deploy preview --target-org {{ScratchOrg}}
+```
+
+### Retrieve Source Code
+
+To retrieve the source code from the Scratch Org, use:
+
+```bash
+sf project retrieve start --target-org MyScratchOrg
+```
+
+If you have Source Tracking enabled, you can preview the changes that will be retrieved by running:
+
+```bash
+sf project retrieve preview --target-org MyScratchOrg
+```
+
+### Predefined Data
+
+Predefined data can be found in the `scratch-org/data` directory. You can import this data into your Scratch Org using the following command:
+
+```bash
+sf data import tree --target-org MyScratchOrg --plan scratch-org/data/plan.json
+```
+
+### Predefined Metadata
+
+Predefined metadata can be found in the `scratch-org/metadata` directory. This metadata can be deployed to your Scratch Org using the following command:
+
+```bash
+sf project deploy start --target-org MyScratchOrg  --source-dir scratch-org/metadata
+```
+
+### Delete Scratch Org
+To delete the Scratch Org, use the following command:
+
+```bash
+sf org delete scratch --target-org MyScratchOrg
+```
