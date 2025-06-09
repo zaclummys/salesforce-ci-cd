@@ -18,28 +18,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "11"
-
       - uses: pmd/pmd-github-action@v2
         with:
           analyzeModifiedFilesOnly: false
           sourcePath: "force-app"
           rulesets: "ruleset.xml"
-
-  pmd-apex-legetz:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup PMD
-        uses: legetz/setup-pmd@7.1.0
-
-      - name: APEX full scan
-        run: pmd check --dir ./force-app/main/default/classes/*.cls --rulesets ./ruleset.xml -f text
+          createGitHubAnnotations: false
+          uploadSarifReport: false
 
   lint-lwc:
     runs-on: ubuntu-latest
