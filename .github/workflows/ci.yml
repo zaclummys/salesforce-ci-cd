@@ -29,6 +29,18 @@ jobs:
           sourcePath: "force-app"
           rulesets: "ruleset.xml"
 
+  pmd-apex-legetz:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup PMD
+        uses: legetz/setup-pmd@7.1.0
+
+      - name: APEX full scan
+        run: pmd check --dir ./force-app/main/default/classes/*.cls --rulesets ./pmd-rules.xml -f text
+
   lint-lwc:
     runs-on: ubuntu-latest
     steps:
