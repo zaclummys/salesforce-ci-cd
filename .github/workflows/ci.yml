@@ -75,9 +75,9 @@ jobs:
         run: |
           npm install --global @salesforce/cli
 
-      - name: Authorize Dev Hub
+      - name: Authorize Production Org
         run: |
-          echo ${{ secrets.SFDX_AUTH_URL }} | sf org login sfdx-url --alias DevHub --set-default-dev-hub --sfdx-url-stdin 
+          echo ${{ secrets.PRODUCTION_SFDX_AUTH_URL }} | sf org login sfdx-url --alias Production --sfdx-url-stdin 
 
-      - name: Validate
-        run: sf project deploy validate --target-org DevHub --source-dir force-app --test-level RunLocalTests
+      - name: Validate Against Production Org
+        run: sf project deploy validate --target-org Production --source-dir force-app
