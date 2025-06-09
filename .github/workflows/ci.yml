@@ -23,7 +23,7 @@ jobs:
           analyzeModifiedFilesOnly: false
           sourcePath: "force-app"
           rulesets: "ruleset.xml"
-          createGitHubAnnotations: false
+          createGitHubAnnotations: true
           uploadSarifReport: false
 
   lint-lwc:
