@@ -25,6 +25,7 @@ jobs:
 
       - uses: pmd/pmd-github-action@v2
         with:
+          sourcePath: "force-app"
           rulesets: "ruleset.xml"
 
   lint-lwc:
