@@ -6,7 +6,7 @@ This repository contains a sample Salesforce CI/CD pipeline using GitHub Actions
 You can create a new Scratch Org by running the following command:
 
 ```bash
-sf org create scratch --target-dev-hub DevHub
+sf org create scratch --target-dev-hub DevHub --definition-file scratch-org/definitions/default.json --set-default --alias MyScratchOrg
 ```
 
 You can define a duration for the Scratch Org by using the `--duration-days` option, for example:
