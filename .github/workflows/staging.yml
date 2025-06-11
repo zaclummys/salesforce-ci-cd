@@ -11,7 +11,7 @@ on:
 
 jobs:
   validate:
-    - name: Validate Against Staging
-      uses: ./.github/workflows/validate-against-org.yml
-      secrets: 
-        sfdx-auth-url: ${{ secrets.STAGING_SFDX_AUTH_URL }}
+    name: Validate Against Staging
+    uses: ./.github/workflows/validate-against-org.yml
+    secrets:
+      sfdx-auth-url: ${{ secrets.STAGING_SFDX_AUTH_URL }}
