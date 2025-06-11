@@ -8,6 +8,7 @@ on:
 
 jobs:
   validate-against-org:
+    name: Validate Against Org
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

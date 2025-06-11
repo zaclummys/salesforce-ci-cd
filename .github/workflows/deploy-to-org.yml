@@ -22,9 +22,9 @@ jobs:
       - name: Install Salesforce CLI
         run: npm install --global @salesforce/cli
 
-      - name: Authorize Org
+      - name: Authorize
         run: |
           echo "${{ secrets.sfdx-auth-url }}" | sf org login sfdx-url --alias org-to-deploy --sfdx-url-stdin 
 
-      - name: Deploy To Org
+      - name: Deploy
         run: sf project deploy start --source-dir force-app --target-org org-to-deploy
