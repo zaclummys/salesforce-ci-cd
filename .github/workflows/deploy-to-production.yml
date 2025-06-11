@@ -10,6 +10,9 @@ on:
       - main
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    
   deploy-to-production:
     needs: ci
     uses: ./.github/workflows/deploy-to-org.yml
