@@ -7,8 +7,13 @@ on:
         required: true
 
 jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
   deploy-to-org:
     name: Deploy To Org
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
