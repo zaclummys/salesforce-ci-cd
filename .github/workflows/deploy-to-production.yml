@@ -2,12 +2,12 @@ name: Deploy To Production Workflow
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 on:
   push:
     branches:
-      - main
+      - production
 
 jobs:
   ci:
@@ -16,7 +16,6 @@ jobs:
     
   deploy-to-production:
     name: Deploy To Production
-    needs: ci
     uses: ./.github/workflows/deploy-to-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
