@@ -16,6 +16,7 @@ jobs:
     
   deploy-to-production:
     name: Deploy To Production
+    needs: ci
     uses: ./.github/workflows/deploy-to-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
