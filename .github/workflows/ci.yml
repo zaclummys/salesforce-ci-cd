@@ -13,7 +13,7 @@ jobs:
 
       - uses: pmd/pmd-github-action@v2
         with:
-          analyzeModifiedFilesOnly: true
+          analyzeModifiedFilesOnly: false
           sourcePath: "force-app"
           rulesets: "ruleset.xml"
           createGitHubAnnotations: true
