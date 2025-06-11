@@ -10,7 +10,7 @@ on:
       - staging
 
 jobs:
-  validate:
+  validate-against-staging:
     uses: ./.github/workflows/validate-against-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.STAGING_SFDX_AUTH_URL }}

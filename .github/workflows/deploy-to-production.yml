@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-to-production:
     uses: ./.github/workflows/deploy-to-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}

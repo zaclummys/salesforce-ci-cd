@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  deploy:
+  deploy-to-org:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

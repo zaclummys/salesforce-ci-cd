@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  validate:
+  validate-against-production:
     uses: ./.github/workflows/validate-against-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}

@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  validate:
+  validate-against-org:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
