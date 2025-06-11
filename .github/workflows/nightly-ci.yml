@@ -1,0 +1,21 @@
+name: Feature CI Workflow
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Every day at 2 AM
+
+jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
+  deploy-to-scratch-org:
+    name: Deploy To Scratch Org
+    steps:
+      
+
+    
