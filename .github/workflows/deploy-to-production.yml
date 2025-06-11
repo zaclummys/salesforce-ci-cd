@@ -1,17 +1,16 @@
-name: Production
+name: Deploy To Production Workflow
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 on:
-  pull_request:
-    branches: 
+  push:
+    branches:
       - main
 
 jobs:
-  validate:
-    name: Validate Against Production
-    uses: ./.github/workflows/validate-against-org.yml
+  deploy:
+    uses: ./.github/workflows/deploy-to-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
