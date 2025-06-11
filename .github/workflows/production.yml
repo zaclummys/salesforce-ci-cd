@@ -1,0 +1,17 @@
+name: Salesforce CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: "main"
+
+jobs:
+  validate:
+    steps:
+      - name: Validate Against Production
+        uses: .github/actions/validate-against-org
+        with: 
+          sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
