@@ -10,8 +10,13 @@ on:
       - staging
 
 jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
   validate-against-staging:
     name: Validate Against Staging
+    needs: ci
     uses: ./.github/workflows/validate-against-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.STAGING_SFDX_AUTH_URL }}
