@@ -10,8 +10,13 @@ on:
       - production
 
 jobs:
+  ci:
+    name: CI
+    uses: ./.github/workflows/ci.yml
+
   validate-against-production:
     name: Validate Against Production
+    needs: ci
     uses: ./.github/workflows/validate-against-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
