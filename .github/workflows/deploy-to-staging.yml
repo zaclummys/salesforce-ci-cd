@@ -11,6 +11,7 @@ on:
 
 jobs:
   deploy-to-staging:
+    needs: ci
     uses: ./.github/workflows/deploy-to-org.yml
     secrets:
       sfdx-auth-url: ${{ secrets.STAGING_SFDX_AUTH_URL }}
