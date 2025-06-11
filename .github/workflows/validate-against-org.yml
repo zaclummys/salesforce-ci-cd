@@ -23,7 +23,7 @@ jobs:
 
       - name: Authorize Staging Org
         run: |
-          echo "${{ secrets.sfdx-auth-url }}" | sf org login sfdx-url --sfdx-url-stdin --alias org-to-validate
+          echo "${{ secrets.sfdx-auth-url }}" | sf org login sfdx-url --alias org-to-validate --sfdx-url-stdin 
 
       - name: Validate Against Staging Org
         run: sf project deploy validate --source-dir force-app --target-org org-to-validate
