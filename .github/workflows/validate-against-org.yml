@@ -7,10 +7,6 @@ on:
         required: true
 
 jobs:
-  ci:
-    name: CI
-    uses: ./.github/workflows/ci.yml
-    
   validate-against-org:
     name: Validate Against Org
     runs-on: ubuntu-latest
