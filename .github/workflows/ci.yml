@@ -1,4 +1,4 @@
-name: Salesforce CI
+name: CI
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
