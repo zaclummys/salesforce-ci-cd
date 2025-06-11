@@ -1,0 +1,30 @@
+name: Validate Against Org Workflow
+
+on:
+  workflow_call:
+    secrets:
+      sfdx-auth-url:
+        required: true
+
+jobs:
+  validate-against-org:
+    name: Validate Against Org
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Salesforce CLI
+        run: npm install --global @salesforce/cli
+
+      - name: Authorize Org
+        run: |
+          echo "${{ secrets.sfdx-auth-url }}" | sf org login sfdx-url --alias org-to-validate --sfdx-url-stdin 
+
+      - name: Validate Against Org
+        run: sf project deploy validate --source-dir force-app --target-org org-to-validate

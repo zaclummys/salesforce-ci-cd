@@ -1,0 +1,30 @@
+name: Deploy To Org Workflow
+
+on:
+  workflow_call:
+    secrets:
+      sfdx-auth-url:
+        required: true
+
+jobs:
+  deploy-to-org:
+    name: Deploy To Org
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Salesforce CLI
+        run: npm install --global @salesforce/cli
+
+      - name: Authorize
+        run: |
+          echo "${{ secrets.sfdx-auth-url }}" | sf org login sfdx-url --alias org-to-deploy --sfdx-url-stdin 
+
+      - name: Deploy
+        run: sf project deploy start --source-dir force-app --target-org org-to-deploy
