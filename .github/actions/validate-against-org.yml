@@ -1,0 +1,25 @@
+name: Validate Against Org
+inputs:
+  sfdx-auth-url:
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "18"
+
+    - name: Install Salesforce CLI
+      run: |
+        npm install --global @salesforce/cli
+
+    - name: Authorize Staging Org
+      run: |
+        echo ${{ inputs.sfdx-auth-url }} | sf org login sfdx-url --set-default--sfdx-url-stdin 
+
+    - name: Validate Against Staging Org
+      run: sf project deploy validate --source-dir force-app
