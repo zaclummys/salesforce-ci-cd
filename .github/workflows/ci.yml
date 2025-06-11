@@ -1,15 +1,11 @@
-name: Salesforce CI
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+name: CI Workflow
 
 on:
-  push:
-    branches: "**"
+  workflow_call:
 
 jobs:
   pmd-apex:
+    name: Analyze Apex Using PMD
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,6 +20,7 @@ jobs:
           uploadSarifReport: false
 
   lint-lwc:
+    name: Lint Lightning Web Components
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,10 +34,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint Lightning Web Components
+      - name: Run Lint
         run: npm run lint
 
   test-lwc:
+    name: Test Lightning Web Components
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -54,5 +52,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Test Lightning Web Components
+      - name: Run Tests
         run: npm run test

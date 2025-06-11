@@ -1,0 +1,17 @@
+name: Validate Against Production Workflow
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  validate-against-production:
+    name: Validate Against Production
+    uses: ./.github/workflows/validate-against-org.yml
+    secrets:
+      sfdx-auth-url: ${{ secrets.PRODUCTION_SFDX_AUTH_URL }}
