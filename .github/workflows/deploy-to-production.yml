@@ -11,9 +11,11 @@ on:
 
 jobs:
   ci:
+    name: CI
     uses: ./.github/workflows/ci.yml
     
   deploy-to-production:
+    name: Deploy To Production
     needs: ci
     uses: ./.github/workflows/deploy-to-org.yml
     secrets:

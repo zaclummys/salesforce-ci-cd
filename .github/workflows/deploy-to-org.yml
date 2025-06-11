@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy-to-org:
+    name: Deploy To Org
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
