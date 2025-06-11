@@ -15,7 +15,7 @@ jobs:
 
   deploy-to-scratch-org:
     name: Deploy To Scratch Org
-    steps:
+    uses: ./.github/workflows/deploy-to-scratch-org.yml
       
 
     
