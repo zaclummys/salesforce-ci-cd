@@ -5,6 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 2 * * *'  # Every day at 2 AM
 
@@ -16,6 +17,8 @@ jobs:
   deploy-to-scratch-org:
     name: Deploy To Scratch Org
     uses: ./.github/workflows/deploy-to-scratch-org.yml
+    secrets:
+      dev-hub-sfdx-auth-url: ${{ secrets.DEV_HUB_SFDX_AUTH_URL }}
       
 
     
